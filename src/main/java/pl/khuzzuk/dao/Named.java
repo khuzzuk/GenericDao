@@ -2,6 +2,9 @@ package pl.khuzzuk.dao;
 
 public interface Named<T extends Comparable<? super T>> extends Persistable {
     T getName();
+
+    void setName(T t);
+
     default boolean namedEquals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

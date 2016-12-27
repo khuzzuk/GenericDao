@@ -91,4 +91,8 @@ public class DAO {
         }
         return resolver;
     }
+
+    public void close() {
+        manager.close();
+    }
 }

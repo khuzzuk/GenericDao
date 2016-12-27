@@ -6,7 +6,7 @@
 
     <groupId>pl.khuzzuk</groupId>
     <artifactId>generic-dao</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>Generic Dao</name>
     <description>Generic Dao for all Named entities</description>
     <url>https://github.com/khuzzuk/GenericDao</url>

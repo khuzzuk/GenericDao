@@ -19,4 +19,8 @@ class DAOManager {
     synchronized Session openNewSession() {
         return factory.openSession();
     }
+
+    void close() {
+        factory.close();
+    }
 }

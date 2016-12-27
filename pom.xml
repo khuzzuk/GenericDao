@@ -6,7 +6,7 @@
 
     <groupId>pl.khuzzuk</groupId>
     <artifactId>generic-dao</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>Generic Dao</name>
     <description>Generic Dao for all Named entities</description>
     <url>https://github.com/khuzzuk/GenericDao</url>
@@ -16,7 +16,6 @@
         <compiler.version>3.5.1</compiler.version>
         <java.version>1.8</java.version>
         <maven-javadoc-plugin>2.10.4</maven-javadoc-plugin>
-        <maven-surefire-plugin>2.19.1</maven-surefire-plugin>
         <maven-assembly-plugin-version>2.6</maven-assembly-plugin-version>
         <jpa.version>1.0.2</jpa.version>
         <jta.version>1.1</jta.version>
@@ -33,17 +32,6 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin}</version>
-                <configuration>
-                    <groups>fast</groups>
-                    <includes>
-                        <include>**/*Test.*</include>
-                    </includes>
                 </configuration>
             </plugin>
             <plugin>

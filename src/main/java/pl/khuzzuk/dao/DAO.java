@@ -4,7 +4,7 @@ package pl.khuzzuk.dao;
 import org.hibernate.cfg.Configuration;
 
 import java.util.*;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 public class DAO {
     private DAOManager manager;
@@ -12,19 +12,18 @@ public class DAO {
 
     @SafeVarargs
     public final <T extends Named<U>, U extends Comparable<? super U>> void initResolvers(Class<T>... classes) {
-        Stream<Class<T>> stream = Arrays.stream(classes);
-        if (stream.filter(this::isNotNamed).count() != 0) {
+        if (Arrays.stream(classes).filter(this::isNotNamed).count() != 0) {
             throw new IllegalArgumentException("All classes should implement Named<U> interface");
         }
         Configuration configure = new Configuration().configure();
-        stream.forEach(configure::addAnnotatedClass);
+        Arrays.stream(classes).forEach(configure::addAnnotatedClass);
         manager = new DAOManager(configure.buildSessionFactory());
         resolvers = new HashMap<>();
-        stream.forEach(this::putResolver);
+        Arrays.stream(classes).forEach(this::putResolver);
     }
 
     private boolean isNotNamed(Class<?> type) {
-        return Arrays.stream(type.getInterfaces()).filter(i -> i.getSimpleName().equals("Named")).count() != 0;
+        return !Arrays.stream(type.getInterfaces()).map(Class::getSimpleName).filter(i -> i.equals("Named")).collect(Collectors.toSet()).contains("Named");
     }
 
     private <T extends Named<U>, U extends Comparable<? super U>> void putResolver(Class<T> type) {

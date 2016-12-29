@@ -11,7 +11,7 @@ public class DAO {
     private Map<Class<?>, DAOTransactional<? extends Named<? extends Comparable>, ? extends Comparable>> resolvers;
 
     @SafeVarargs
-    public final <T extends Named<U>, U extends Comparable<? super U>> void initResolvers(Class<T>... classes) {
+    public final void initResolvers(Class<? extends Named<? extends Comparable<?>>>... classes) {
         if (Arrays.stream(classes).filter(this::isNotNamed).count() != 0) {
             throw new IllegalArgumentException("All classes should implement Named<U> interface");
         }
@@ -26,8 +26,9 @@ public class DAO {
         return !Arrays.stream(type.getInterfaces()).map(Class::getSimpleName).filter(i -> i.equals("Named")).collect(Collectors.toSet()).contains("Named");
     }
 
-    private <T extends Named<U>, U extends Comparable<? super U>> void putResolver(Class<T> type) {
-        resolvers.put(type, new DAOEntityTypeResolver<>(type, manager));
+    @SuppressWarnings("unchecked")
+    private void putResolver(Class<? extends Named<? extends Comparable<?>>> type) {
+        resolvers.put(type, new DAOEntityTypeResolver(type, manager));
     }
 
     @SuppressWarnings("unchecked")
@@ -71,7 +72,7 @@ public class DAO {
     }
 
     public <T extends Named<U>, U extends Comparable<? super U>> void removeEntity(T entity) {
-        getResolver(entity).commit(entity);
+        getResolver(entity).remove(entity.getName());
     }
 
     @SuppressWarnings("unchecked")
